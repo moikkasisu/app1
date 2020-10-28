@@ -9,185 +9,76 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">     
   
     <link rel="stylesheet" href="style-app.css">
-    <title>TaskPlannerApp</title>
+    <title>ReminderList</title>
     </head>
   <body>
-    <div class="container-fluid">
-    <nav class="navbar navbar-light bg-light navbar-expand-lg fixed-top">
-      <a href="#" class="navbar-brand"><img src="https://icon-library.com/images/phone_app_outline_clock-512.png" width="40" alt="app logo">Task Planner App</a>
+   <div class="container-fluid"> 
+ <!-- "all reminder tasks list" in modal -->  
+<div class="modal fade" id="allTaskModal" tabindex="-1" aria-labelledby="allTaskModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable">
+   <div class="modal-content">
+     <div class="modal-header">
+       <h6 class="modal-title" id="allTaskModalLabel">New Task Form</h6>
+       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+         <span aria-hidden="true">&times;</span>
+       </button>
+     </div>
     
-       <form class="form-inline">
-        <input id='theSearch' type="search" class="form-control mr-sm-2"  placeholder="Enter search term" aria-label="Enter a search term containing at least one alphanumeric character" autocomplete="off">
-       
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-
-        <p id="searchout"></p>
-
-      </form>
+     <div class="modal-body">
+       <small><p><q>Progress means tackling a harder job today than you tackled yesterday</q></p></small>
+        <div class="card">
+          <div class="card-header">
+          All Tasks List
+          </div>
+          <ul class="list-group list-group-flush" id="tasksList">
+          </ul>
+        </div>
+     </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>           
+      </div>       
+    </div>
+  </div>
+</div>     
+      
+    <nav class="navbar navbar-custom bg-light navbar-expand-sm fixed-top">
+      <a href="#" class="navbar-brand"><img src="https://icon-library.com/images/phone_app_outline_clock-512.png" width="40" alt="app logo">Reminder List</a>
+           
+        <form class="form-inline active-purple-3 active-purple-4" action="action_page.html">
+          <i class="fas fa-search" aria-hidden="true"></i>
+          <input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search"
+            aria-label="Search">
+        </form>    
      
       <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse"><span class="navbar-toggler-icon"></span>
         </button>
          <div class="collapse navbar-collapse" id="navbarCollapse">
          <ul class="navbar-nav ml-auto">
            <li class="nav-item active"><a href="#homepage" class="nav-link">Home</a></li>
-           <li class="nav-item"><a href="#todo" class="nav-link">To Do</a></li>
-           <li class="nav-item"><a href="#inprogress" class="nav-link">In Progress</a></li>
-           <li class="nav-item"><a href="#review" class="nav-link">Review</a></li>
-           <li class="nav-item"><a href="#done" class="nav-link">Done</a></li>
-         </ul>
+           <li class="nav-item">
+        <!-- Button trigger modal added to navbar-->
+          <button id="modalTrigger" type="button" class="btn btn-light" data-toggle="modal" data-target="#allTaskModal">All Reminders</button>
+          </li>
+          </ul>
          </div>
-
-    <!-- Button trigger modal added to navbar-->
-<button id="modalTrigger" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addTaskModal"><strong style="content:\002B">&#43; New Task</strong></button>
-
-<!-- Modal -->
-<div class="modal" id="addTaskModal" role="dialog" tabindex="-1" aria-labelledby="addTaskModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h6 class="modal-title" id="addTaskModalLabel">New Task Form</h6>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
+    </nav>
      
-      <div class="modal-body">
-        <form id= "modalnewTaskForm" class="needs-validation" novalidate>
-          <form>
-          <div class="form-group">
-          <div class="form-row">
-          <div class="col-sm-6 md-3">
-            <label for="modaltaskname">Task Name:</label> 
-          
-          <input id="modaltaskname" type="text" class="form-control" minlength="9" required>
-         
-             <!-- Error -->
-           <div class="help-block with-errors"></div>
-              <div class="invalid-feedback">
-                  You must enter a task name (longer than 8 characters).
-                </div>
-              </div>    
-                  
-                <div class="col-sm-6 md-3">
-                <label for="modaltaskDuedate"> Due Date:</label>
-                <input type="date" class="form-control" id="modaltaskDuedate" data-date-format="dd/mm/yyyy" required>   
-                <div class="invalid-feedback">
-                  Please pick a valid date (DD/MM/YYYY).
-                </div> 
-               <!-- Error -->
-               <div class="help-block with-errors"></div>
-               </div>
-               </div>
-              </div>
-                                         
-        
-               <div class="form-group">
-                <label for="modaltaskDescr">Task Description:</label>
-                <!-- <input type="text" class="form-control" id="task-description"> -->
-                <textarea class="form-control" id="modaltaskDescr" rows="3" minlength="16" required></textarea>
-                <div class="invalid-feedback">
-                  Please enter description (longer than 15 characters).
-                </div>
-                 <!-- Error -->
-                <div class="help-block with-errors"></div>
-              </div>
-                  
-      
-              <div class="form-group">
-              <div class="form-row">
-              <div class="col-sm-4 md-3">
-                  <label for="modaltaskAssignedTo">Assigned to Name</label>
-                    <input type="text" class="form-control" name="username" minlength="9"  pattern="^[a-zA-Z0-9_.-]*$" id="modaltaskAssignedTo"  placeholder="username" required>          
-                    <!-- Error -->
-                    <div class="help-block with-errors"></div>
-                    <div class="invalid-feedback">
-                      Please enter a valid name (more than 8 characters).
-                    </div> 
-                  </div>
-
-              <div class="col-sm-8 md-3">
-                    <label for="modalemailAssignee"> Assignee Email Address (Optional):</label>
-                  <input type="email" class="form-control" placeholder="Email Address" id="modalemailAssignee" required> 
-                  <div class="invalid-feedback">
-                    Please enter a valid email address.
-                  </div>    
-               <!-- Error -->
-               <div class="help-block with-errors"></div>
-              </div>
-            </div>
-          </div>
-      
-              <div class="form-group">
-                <div class="form-row">
-                  <div class="col-sm-6 md-3">
-                  <label for="modalstatus">Task Status:</label>
-                  <select class="custom-select" id="modalstatus" required>
-                   <div class="invalid-feedback">
-                      Please make a selection.
-                    </div>
-                    <option selected disabled value="">Choose...</option>
-                    <option>To Do</option>
-                    <option>In Progress</option>
-                    <option>Review</option>
-                    <option>Done</option>
-                  </select>
-                 <!-- Error -->
-                 <div class="help-block with-errors"></div>
-                </div>
-                   
-      
-                <div class="col-sm-6 md-3">
-                    <label for="modalcategory"> Task Category </label>
-                    <select class="custom-select" id="modalcategory" required>
-                     <div class="invalid-feedback">
-                      Please make a selection.
-                      </div>
-                    <option selected disabled value="">Choose...</option>
-                    <option>Work</option>
-                    <option>Personel</option>
-                    <option>Other</option>
-                    </select>
-                         <!-- Error -->
-                <div class="help-block with-errors"></div>
-                  </div>
-                  </div>
-                </div>                         
-              
-         
-      <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      <button class="btn btn-primary" type="submit" id="modalformSubmit"> Add Task </button>
-
-    </form>
-  </form>
-</div> 
-    
-    </div>
-    
-    </div>
-    </div>
-    </div>
-  </div> 
-</nav>
-  
-   
-    <!-- Monica's Original Form Home Page -->
-    
-    <form class="needs-validation" id= "newTaskForm" novalidate>
+    <!-- Below are add task form with validation -->
+     <form class="needs-validation" id="newTaskForm">
     <form>
     <div class="form-row">
     <div class="mx-auto" style="width: 700px; padding-top: 30px">
-    <!-- <form action="/action_page.php">                -->
            
     <div class="form-group">
     <div class="form-row">
-    <div class="col-sm-8 md-3">
-      <label for="taskname">Task Name:</label> 
-          <!--* toggle switch *
-        <div class="custom-control custom-switch">            
+    <div class="col-sm-12 md-3">
+      <label for="taskname"></label><span class="badge badge-pill badge-success"><label>New</label></span>&nbsp;Task Name: <small>(more than 8 characters excl.space)&nbsp;</small><span> 
+          <!-- * toggle switch * -->
+       <label><div class="custom-control custom-switch">            
           <input type="checkbox" class="custom-control-input" id="customSwitches">
             <label class="custom-control-label" for="customSwitches">to archive</label>  
-        </div> -->
+        </div></label></span> 
+     
     <input id="taskname" type="text" class="form-control" minlength="9" required>
    
        <!-- Error -->
@@ -196,12 +87,11 @@
             You must enter a task name (longer than 8 characters).
           </div>
         </div>    
-
     
-      <div class="col-sm-4 md-3">
-         <label for="taskid">Task ID:</label> 
-          <input style="background-color: #dfe6e6; border-color:#d6dbdb" type="number" id="taskid" min=1 max=999/>       
-      </div> 
+      <!-- <div class="col-sm-4 md-3"> -->
+         <!-- <label for="taskid">Task ID:</label> 
+          <input readonly style="background-color: #dfe6e6; border-color:#d6dbdb" type="number" placeholder="auto-generate" id="taskid" min=1 max=999/>         -->         
+      <!-- </div>  -->
       </div>
     </div>  
       
@@ -214,7 +104,7 @@
           
           <div class="col-sm-6 md-3">
           <label for="taskDuedate"> Due Date:</label>
-          <input type="date" class="form-control" id="taskDuedate" data-date-format="dd/mm/yyyy" required>   
+          <input type="date" class="form-control" id="taskDuedate" data-date-format="DD/MM/YYYY" placeholder="pick a date" required>   
           <div class="invalid-feedback">
             Please pick a valid date (DD/MM/YYYY).
           </div> 
@@ -222,20 +112,22 @@
          <div class="help-block with-errors"></div>
          </div>
          </div>
-        
-                     
+        </div>
+                          
   
          <div class="form-group">
-          <label for="taskDescr">Task Description:</label>
+          <div class="form-row">
+             <label for="taskDescr">Task Description:</label>
           <!-- <input type="text" class="form-control" id="task-description"> -->
-          <textarea class="form-control" id="taskDescr" rows="3" minlength="16" required></textarea>
+          <textarea class="form-control" id="taskDescr" rows="2" minlength="16" required></textarea>
           <div class="invalid-feedback">
             Please enter description (longer than 15 characters).
           </div>
            <!-- Error -->
           <div class="help-block with-errors"></div>
         </div>
-            
+        </div>
+              
 
         <div class="form-group">
         <div class="form-row">
@@ -249,8 +141,8 @@
               </div> 
             </div>
         <div class="col-sm-8 md-3">
-              <label for="emailAssignee"> Assignee Email Address (Optional):</label>
-            <input type="email" class="form-control" placeholder="Email Address" id="emailAssignee" required> 
+              <label for="emailAssignee"> Assignee Email Address (optional)</label>
+            <input type="text" class="form-control" placeholder="Email Address" id="emailAssignee"> 
             <div class="invalid-feedback">
               Please enter a valid email address.
             </div>    
@@ -310,26 +202,16 @@
             </div>
           </div>
         </div>
-     <button class="btn btn-primary" type="submit" id="formSubmit">Add Task</button>
+     <button class="btn btn-dark" type="submit" id="formSubmit">Add Task</button>
     </div>
   </div> 
     </form>
-    </form>
-  
-  
-  <div class="card" style="width: 18rem; margin-top: 2rem">
-    <div class="card-header">
-      Tasks List
-    </div>
-    <ul class="list-group list-group-flush" id="tasksList">
-     </ul>
-    </div>
+    <div id="msg">
+      <pre></pre>
 
+    </div>
+  </form>
   </div>
-
-  
-  <script src="js/taskManager.js"></script>
-  <script src="js/index.js"></script>
   
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -338,7 +220,7 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
    
-    
-   
-  </body>
+    <script src="js/taskManager.js"></script>
+    <script src="js/index.js"></script>
+    </body>
 </html>
