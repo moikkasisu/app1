@@ -1,3 +1,3 @@
 # app1 - Reminder app using javascript, html, css, bootstrap
 
-Add in reminder items/ tasks, and manage all list by clicking into All Reminder List in Navbar to mark complete, update or delete
+Add reminder items/ tasks, manage all list through All Reminder List to carry out CRUD operations.
